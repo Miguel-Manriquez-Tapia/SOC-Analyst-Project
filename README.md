@@ -161,10 +161,12 @@ start elasticsearch.service
 \-confirm elasticsearch is running.
 
 \-systemctl status elasticsearch.service
+<br />
+<br />
+<br />
 
-  
 
-**KIBANA SETUP (This step is technical, if you do not follow each step corectly, troubleshooting will become vastly more difficult, contact me directly for support)**
+**KIBANA SETUP (This step is pretty technical, if you do not follow each step correctly, troubleshooting will become vastly more difficult, contact me directly for support)**
 
   
 
@@ -278,7 +280,9 @@ IMPORTANT: 3 keys are genrated
 
 16\. Input: systemctl restart kibana.service (TAB for autocomplete)
 
-  
+<br />
+<br />
+
 
   
 
@@ -334,7 +338,8 @@ Windows Server is now running.
 
 ![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-19%20002415.png)
 
-  
+<br />
+<br />
 
   
 
