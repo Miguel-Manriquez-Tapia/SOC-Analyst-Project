@@ -62,15 +62,15 @@ Let begin:
 
   
 
-![](file:///C:/Users/migue/AppData/Local/Temp/lu5414440namq.tmp/lu5414440nape_tmp_898b209a.png)  
-
+![image alt](https://github.com/Miguel-Manriquez-Tapia/Cyber-Forensic-Project/blob/main/1st.png)
+  
 2.  After setting you host name and server label (should be the same). Deploy your server instance.
     
     Click the view console option in VULTR to see if the instance is ready to connect via SSH.
     
 
-![](file:///C:/Users/migue/AppData/Local/Temp/lu5414440namq.tmp/lu5414440nape_tmp_ef0ce6e2.png)  
-
+![image alt](https://github.com/Miguel-Manriquez-Tapia/Cyber-Forensic-Project/blob/main/1st.png)
+  
   
 
 Use the protocol SSH via PowerShell.  
@@ -95,8 +95,8 @@ To SSH on into your VPC instance:
 
   
 
-![](file:///C:/Users/migue/AppData/Local/Temp/lu5414440namq.tmp/lu5414440nape_tmp_de86c317.png)  
-
+![image alt](https://github.com/Miguel-Manriquez-Tapia/Cyber-Forensic-Project/blob/main/1st.png)
+  
 3\. Download Elasticsearch.
 
 \-go to [https://www.elastic.co/downloads/elasticsearch](https://www.elastic.co/downloads/elasticsearch)
@@ -147,8 +147,8 @@ To SSH on into your VPC instance:
 
 \-Change source to: My IP, add rule.
 
-![](file:///C:/Users/migue/AppData/Local/Temp/lu5414440namq.tmp/lu5414440nape_tmp_5577a002.png)  
-
+![image alt](https://github.com/Miguel-Manriquez-Tapia/Cyber-Forensic-Project/blob/main/1st.png)
+  
 11.Start up Elasticsearch Service
 
 \-input: systemctl
