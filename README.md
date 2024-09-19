@@ -1,6 +1,5 @@
 <h1>SOC Analyst Project</h1>
 
- ### [YouTube Demonstration](https://youtu.be/)
 
 <h2>Description</h2>
 ELK Stack...
@@ -37,18 +36,18 @@ Let begin:
      <br />
     -Set the network location.<br />
     -Configure the IPv4 range. *You can decide to do this manually or let VULTR set it automatically. <br />
-    -Name the Network.<br />
+    -Name your Network.<br />
     -Deploying a new server. Location should be the same as VPC. <br />
     -For this project we will be using:
     -Ubuntu 22.04 LTS X64<br />
      -80GB GB NVMe4 vCPUs<br />
      -Memory: 16Gbs<br />
-      Bandwidth: 6 TBs<br />
-      Select: VPC 2.0<br />
-      *Establish your own IP<br />
+     -Bandwidth: 6 TBs<br />
+     -Select: VPC 2.0<br />
+     -*Establish your own IP<br />
 
     
-1.  1\. Choose your operating system, for this guide we will be using:  
+1.  Choose your operating system, for this guide we will be using:  
     Ubuntu 22.04 LTS X64  
     80GB GB NVMe4 vCPUs  
     Memory: 16Gbs  
@@ -62,14 +61,14 @@ Let begin:
 
   
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/Cyber-Forensic-Project/blob/main/1st.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-19%20002337.png)
   
 2.  After setting you host name and server label (should be the same). Deploy your server instance.
     
     Click the view console option in VULTR to see if the instance is ready to connect via SSH.
     
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/Cyber-Forensic-Project/blob/main/1st.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-19%20002344.png)
   
   
 
@@ -95,7 +94,7 @@ To SSH on into your VPC instance:
 
   
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/Cyber-Forensic-Project/blob/main/1st.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-19%20002350.png)
   
 3\. Download Elasticsearch.
 
@@ -147,7 +146,7 @@ To SSH on into your VPC instance:
 
 \-Change source to: My IP, add rule.
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/Cyber-Forensic-Project/blob/main/1st.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-19%20004751.png)
   
 11.Start up Elasticsearch Service
 
@@ -165,7 +164,7 @@ start elasticsearch.service
 
   
 
-**KIBANA SETUP**
+**KIBANA SETUP (This step is technical, if you do not follow each step corectly, troubleshooting will become vastly more difficult, contact me directly for support)**
 
   
 
@@ -333,7 +332,7 @@ Windows Server is now running.
 
 3rd Paste IP into “Computer” and it will ask for password, connect.
 
-![](file:///C:/Users/migue/AppData/Local/Temp/lu5414440namq.tmp/lu5414440nape_tmp_b2a26c99.png)  
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-19%20002415.png)
 
   
 
