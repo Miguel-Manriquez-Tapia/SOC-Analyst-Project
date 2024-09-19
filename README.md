@@ -373,7 +373,7 @@ elastic search
 
 3.Fleet Server uses: 8220
 
-URL = https//ip
+URL = https// <ip>: port number
 
 4.Go to PowerShell
 
