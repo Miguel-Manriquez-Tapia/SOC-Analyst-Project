@@ -38,11 +38,11 @@ Let begin:
     -Set the network location.<br />
     -Configure the IPv4 range. *You can decide to do this manually or let VULTR set it automatically. <br />
     -Name the Network.<br />
-    -Deploying a new server. Location should be the same as VPC. 
+    -Deploying a new server. Location should be the same as VPC. <br />
     -For this project we will be using:
-      Ubuntu 22.04 LTS X64<br />
-      80GB GB NVMe4 vCPUs<br />
-      Memory: 16Gbs<br />
+    -Ubuntu 22.04 LTS X64<br />
+     -80GB GB NVMe4 vCPUs<br />
+     -Memory: 16Gbs<br />
       Bandwidth: 6 TBs<br />
       Select: VPC 2.0<br />
       *Establish your own IP<br />
@@ -387,6 +387,9 @@ add “—fleet server-port = 8220”
 
 5\. Connect to ELK VM via SSH:
 
+  
+
+![](file:///C:/Users/migue/AppData/Local/Temp/lu5414440namq.tmp/lu5414440nape_tmp_145342d9.png)
   
 
 ![](file:///C:/Users/migue/AppData/Local/Temp/lu5414440namq.tmp/lu5414440nape_tmp_145342d9.png)
