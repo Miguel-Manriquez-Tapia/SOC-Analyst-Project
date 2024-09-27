@@ -1,342 +1,188 @@
-<h1>SOC Analyst Project</h1>
+# SOC Analyst Project
 
-
-<h2>Description</h2>
+## Description
 ELK Stack...
-<br />
 
+## Languages and Utilities Used
+- **Elasticsearch** 
+- **Kibana** 
+- **Powershell**
 
-<h2>Languages and Utilities Used</h2>
+## Environments Used 
+- **VULTR VPC 2.0** 
+- **Ubuntu LTS 22.04** 
+- **Windows Server 2022**
 
-- <b>Elasticsearch</b> 
-- <b>Kibana</b>
-- <b>Powershell</b>
+## Network Diagram:
+![image alt](https://i.imgur.com/Oc04Y2R.png)
 
-<h2>Environments Used </h2>
-
-- <b>VULTR VPC 2.0</b> 
-- <b>Ubuntu LTS 22.04</b> 
-- <b>Windows Server 2022</b>
-
-<h2>Network Diagram:</h2>
-<img src="https://i.imgur.com/Oc04Y2R.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-
-
-
-<h2>Project walk-through:</h2>
-
+## Project Walk-through:
 *Note: For the process of signing up to services, please follow the service website's directive.*  
-<br />
-The cloud provider we will use for this project is VULTR.<br/>
-Let begin:
+The cloud provider we will use for this project is VULTR.  
+Let’s begin:
 
-**1. Create a Virtural Private Cloud 2.0 network on VULR.**<br/> 
-     Quick Explanation: A VPC is a networking service that offers improved security, scalability, and performance, allowing users to create isolated, customizable cloud environments with advanced networking features.<br/>
-     <br />
-    -Set the network location.<br />
-    -Configure the IPv4 range. *You can decide to do this manually or let VULTR set it automatically. <br />
-    -Name your Network.<br />
-    -Deploying a new server. Location should be the same as VPC. <br />
-    -For this project we will be using:
-    -Ubuntu 22.04 LTS X64<br />
-     -80GB GB NVMe4 vCPUs<br />
-     -Memory: 16Gbs<br />
-     -Bandwidth: 6 TBs<br />
-     -Select: VPC 2.0<br />
-     -*Establish your own IP<br />
+### 1. Create a Virtual Private Cloud 2.0 network on VULTR.
+- **Quick Explanation**: A VPC is a networking service that offers improved security, scalability, and performance, allowing users to create isolated, customizable cloud environments with advanced networking features.  
+- Set the network location.
+- Configure the IPv4 range. *You can decide to do this manually or let VULTR set it automatically.*
+- Name your Network.
+- Deploy a new server. Location should be the same as the VPC.  
+  For this project, we will be using:
+  - Ubuntu 22.04 LTS X64  
+  - 80GB GB NVMe4 vCPUs  
+  - Memory: 16GB  
+  - Bandwidth: 6TB  
+  - Select: VPC 2.0  
+  - *Establish your own IP*
 
-    
-1.  Choose your operating system, for this guide we will be using:  
-    Ubuntu 22.04 LTS X64  
-    80GB GB NVMe4 vCPUs  
-    Memory: 16Gbs  
-    Bandwidth: 6 TBs
-    
-    Select: VPC 2.0  
-    \* Establish your own IP
-    
-
-  
-
-  
-
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-19%20002337.png)
-  
-2.  After setting you host name and server label (should be the same). Deploy your server instance.
-    
-    Click the view console option in VULTR to see if the instance is ready to connect via SSH.
-    
+### 2. Deploy the Server
+- Set your host name and server label (they should be the same).
+- Deploy your server instance.
+- Click the **View Console** option in VULTR to see if the instance is ready to connect via SSH.
 
 ![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-19%20002344.png)
-  
-  
 
-Use the protocol SSH via PowerShell.  
-\*<> in this write up is a placeholder, do not include in any of you commands from here and forward.
+### 3. Use SSH via PowerShell
+*Note: `<>` in this write-up is a placeholder, do not include in any of your commands.*
 
-To SSH on into your VPC instance:
+1. Start PowerShell with Administrative Privileges.
+2. Type: `ssh root@<IP>`
+3. Press ENTER.
+4. Type "yes" to accept.
+5. Paste the password given for your VULTR instance (password will not be visible when pasting). Press ENTER.
 
-1.  Start PowerShell with Administrative Privileges.
-    
-2.  Type: ssh root@<IP>
-    
-3.  ENTER
-    
-4.  yes (accept)
-    
-
-5.Paste in the password given for your VULTR instance. (after pasting it is not visible, that is how command prompts work), ENTER
-
-5.a. Update Repositories
-
-\-input command: apt-get update && apt-get update-
-
-  
+### 4. Update Repositories
+- Input command: `apt-get update && apt-get update`
 
 ![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-19%20002350.png)
-  
-3\. Download Elasticsearch.
 
-\-go to [https://www.elastic.co/downloads/elasticsearch](https://www.elastic.co/downloads/elasticsearch)
+### 5. Download and Install Elasticsearch
+- Go to [https://www.elastic.co/downloads/elasticsearch](https://www.elastic.co/downloads/elasticsearch).
+- Select: `deb x86_64` and copy the address link.
+- Go back to PowerShell.
+- Input command: `wget <paste elasticsearch address link>`
+- Install Elasticsearch:
+  - Input command: `dpkg -i elasticsearch` (Use TAB to auto-complete).
 
-\-select: deb x86\_64 and copy the address link
+### 6. Save Elasticsearch Security Info
+- Open your Notepad and save the “security auto configuration info.”
+- *The superuser info is saved in this file.*
 
-4\. Go back to PowerShell
+### 7. Change Directories
+- Use: `cd /etc/elasticsearch/`
+- Check the contents of the directory: `ls -a`.
 
-\-input command: wget <paste elastic search address link>
+### 8. Modify `elasticsearch.yml` File
+- Input: `nano elasticsearch.yml`.
+- Remove the `#` (comment) for `network.host: <localhost>`.
+- Paste your public IP.
+- Remove the `#` for the port.
+- Close nano by pressing `ctrl + x`, then type `yes`, and press ENTER to save.
 
-5\. Install Elasticsearch
-
-\-input command: dpkg -i elasticsearch (tab to auto complete)
-
-6.Open your notepad and save the “security auto configuration info”
-
-\-The superuser info is saved in this file.
-
-7\. :Change Directories. Use: cd /etc/elasticsearch/
-
-\-check the contents of the directory: ls -a
-
-8.Note: elasticsearch.yml
-
-\-contains the contents of the configuration settings for the instance
-
-9.Modify elasticsearch.yml file
-
-\-input: nano elasticsearch.yml
-
-\-remove the #(comment) for network.host: <local host>
-
-\-paste your public ip
-
-\-remove the # for port
-
-\-close nano - \*ctrl x, save (yes), enter
-
-10\. Implement Security: Firewall
-
-\- Go to VULTR
-
-\-Network tab
-
-\-Firewall tab
-
-\-Add firewall group
-
-\-Change source to: My IP, add rule.
+### 9. Implement Security: Firewall
+- Go to VULTR.
+- Navigate to the **Network** tab.
+- Go to the **Firewall** tab.
+- Add a firewall group.
+- Change the source to: **My IP**, and add a rule.
 
 ![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-19%20004751.png)
-  
-11.Start up Elasticsearch Service
 
-\-input: systemctl
-
-daemon-reload
-
-enable elasticsearch.service
-
-start elasticsearch.service
-
-\-confirm elasticsearch is running.
-
-\-systemctl status elasticsearch.service
-<br />
-<br />
-<br />
-
-
-**KIBANA SETUP (This step is pretty technical, if you do not follow each step correctly, troubleshooting will become vastly more difficult, contact me directly for support)**
-
-  
-
-1.Visit elastic.co/downloads//kibana
-
-  
-
-2\. Choose platform, for this project we are using:
-
-\-DEB x86\_64
-
-\-Copy the path (copy link address)
-
-3\. Create a new PowerShell window, with administrative privileges.
-
-\-input: ssh root@<ip>
-
-\*you are going to ssh into your VULTR instance.
-
-4.Look at directory contents with: input: ls -a
-
-\-notice: .deb file
-
-5.Installing kibana
-
-\-input: dpkg -i kibana - 8.15.1 -amd64.deb
-
-6\. We need to modify the configuration file.
-
-\-open nano
-
-\-input: nano /etc/kibana/kibana.yml
-
-\-remove the # (comment) from the server port and server host
-
-\*important: for the server host enter the VULTR IP of you instance. Leave the port 5601
-
-7.Update the repositories for Kibana
-
-\-systemctl
-
-daemon-reload
-
-enable kibana.service
-
-start kibana.service
-
-status kibana.service
-
-\*kibana should have the status of: active
-
-  
-
-8.Generate an elasticesearch enrollment token for kibana
-
-\-Change directories: input: cd /usr/share/elasticsearch/bin
-
-\-Generate token: input: ./elasticsearch-create-enrollment-token –scope kibana
-
-\-Save token generated in notepad.
-
-\-Troubleshooting: if you you get “Connection timeout”, it most likely the firewall rules.
-
-9\. Go to VULTR.
-
-\-Network tab
-
-\-Firewall
-
-\-Accept TCP , Range: 1-65535, Source: My IP
-
-  
-
-10.Configure Firewall rule on Ubuntu VM
-
-\-input: cd / (to navigate to home directory)
-
-\-input: ufw allow 5601 (this command allows port 5601 to communicate through the firewall)
-
-11\. Change directories
-
-\-input: cd /usr/share/kibana/bin
-
-you will need to execute the binary file with: input: ./kibana-verification-code(tab for auto complete)
-
-\*a user code will be generated
-
-12.Create a user, password with the file elasticsearch superuser file
-
-13.Generate encryption key
-
-\-input: ./kibana-encryption-keys generate
-
-IMPORTANT: 3 keys are genrated
-
-\-1st = Objects key
-
-\-2nd = Reporting key
-
-3rd = Security key
-
-\*Save to notepad
-
-  
-
-14\. Store keys in binary file “keystore”
-
-\-input: ./kibana-keystone add “pastenameofkey” (1,2,3 from step 13)
-
-15\. Repeat for 1-3 keys.
-
-16\. Input: systemctl restart kibana.service (TAB for autocomplete)
-
-<br />
-<br />
-
-
-  
-
-**Deploying, creating, and installing a Windows Server (2022)**
-
-  
-
-1\. Deploy the new instance.
-
-\-Setting for this project:
-
-Cloud compute – shared CPU
-
-Location – Same as other instances
-
-Image: Windows Standard 2022 x64
-
-Regular: Cloud Compute
-
-Storage 55 GB SSD
-
-Memory: 2 GB
-
-Cores: 1 vCPU
-
-Bandwidth: 2TB
-
-  
-
-2\. Create host name and server name.
-
-3\. Click on console to determine when the VM is fully installed and running.
-
-4\. Start VM
-
-Click: show keyboard
-
-show extra keys
-
-password is located in VULTR
-
-paste the password in clipboard
-
-Windows Server is now running.
-
-\*Let check if you can connect remotely:
-
-1st Copy ip of the Windows Server
-
-2nd Open RDP in a VM or local computer
-
-3rd Paste IP into “Computer” and it will ask for password, connect.
-
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-19%20002415.png)
+### 10. Start Elasticsearch Service
+- Input: 
+  ```bash
+  systemctl daemon-reload
+  systemctl enable elasticsearch.service
+  systemctl start elasticsearch.service
+# Kibana Installation and Configuration
+ **Note: Kibana Setup (This step is more technical, if you do not follow each step correctly, troubleshooting will become vastly more difficult, contact me directly for support)**
+
+
+### 1. Download Kibana
+
+- Visit [elastic.co/downloads/kibana](https://elastic.co/downloads/kibana).
+
+### 2. Choose Platform
+For this project we are using:
+- DEB x86_64
+- Copy the path (copy link address)
+
+### 3. Create a New PowerShell Window
+- Run PowerShell with administrative privileges.
+- Input: `ssh root@`
+  *You are going to SSH into your VULTR instance.*
+
+### 4. List Directory Contents
+- Input: `ls -a`
+  - *Notice the `.deb` file.*
+
+### 5. Install Kibana
+- Input: `dpkg -i kibana-8.15.1-amd64.deb`
+
+### 6. Modify Configuration File
+- Open nano.
+- Input: `nano /etc/kibana/kibana.yml`
+- Remove the `#` (comment) from the `server.port` and `server.host`.
+  - *Important: For the server host, enter the VULTR IP of your instance. Leave the port as 5601.*
+
+### 7. Update Kibana Repositories
+- Run the following commands:
+  - `systemctl daemon-reload`
+  - `systemctl enable kibana.service`
+  - `systemctl start kibana.service`
+  - `systemctl status kibana.service`
+  - *Kibana should have the status of: active.*
+
+### 8. Generate Elasticsearch Enrollment Token for Kibana
+- Change directories:
+  - Input: `cd /usr/share/elasticsearch/bin`
+- Generate token:
+  - Input: `./elasticsearch-create-enrollment-token –scope kibana`
+- Save the token generated in Notepad.
+  - *Troubleshooting: If you get a “Connection timeout,” it’s most likely due to firewall rules.*
+
+### 9. Configure Firewall in VULTR
+- Go to VULTR.
+  - Navigate to the **Network** tab.
+  - Go to **Firewall**.
+  - Accept **TCP**, Range: **1-65535**, Source: **My IP**.
+
+### 10. Configure Firewall Rule on Ubuntu VM
+- Input: `cd /` (to navigate to the home directory)
+- Input: `ufw allow 5601` (this command allows port 5601 to communicate through the firewall)
+
+### 11. Verify Kibana User Code
+- Change directories:
+  - Input: `cd /usr/share/kibana/bin`
+- Execute the binary file:
+  - Input: `./kibana-verification-code` (Use TAB for autocomplete)
+  - *A user code will be generated.*
+
+---
+
+# Windows Server 2022 Deployment
+
+### 1. Deploy the New Instance
+- Settings for this project:
+  - **Cloud Compute**: Shared CPU
+  - **Location**: Same as other instances
+  - **Image**: Windows Standard 2022 x64
+  - **Storage**: 55 GB SSD
+  - **Memory**: 2 GB
+  - **Cores**: 1 vCPU
+  - **Bandwidth**: 2TB
+
+### 2. Start the VM
+- Create the host name and server name.
+- Click **Console** to determine when the VM is fully installed and running.
+- Start the VM.
+
+### 3. Connect Remotely via RDP
+- Copy the IP of the Windows Server.
+- Open **RDP** on a VM or local computer.
+- Paste the IP into **Computer** and it will ask for the password. Connect.
+
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-19%20002407.png)
 
 <br />
 <br />
@@ -345,55 +191,90 @@ Windows Server is now running.
 
   
 
-**Elastic agent & Fleet Server Setup**
+# Elastic Agent & Fleet Server Setup
 
-  
+### 1. Deploy a New Instance on VULTR
+- Settings for this project:
+  - **Optimized Cloud Compute**: Dedicated CPU
+  - **Location**: Same as before
+  - **Image**: Ubuntu 22.04 LTS x64
+  - **Storage**: 30 GB NVMe
+  - **Memory**: 4 GB
+  - **Cores**: 1 vCPU
+  - **Bandwidth**: 4TB
 
-1.Deploy new instance on VULTR. (Settings for this project are as follows)
+### 2. Log in to Public IP via Port 5601
+- Kibana runs on port 5601.
+- Fleet Server uses port 8220.
 
-\-Optimized cloud compute dedicated CPU
+### 3. SSH into Fleet Server
+- Input: `ssh root@ip`
+  - *Add a firewall rule to the ELK stack VM to allow Fleet to access.*
 
-\-Location: Same as before
-
-\-Image Ubuntu 22.04 LTS x64
-
-\-30GB NVMe
-
-\-Core: 1vCPU
-
-\-Memory:4GB
-
-\-Storage: 30GB NVMe
-
-\-Bandwidth: 4GB
-
-2.Log in to your public ip via port number 5601
-
-elastic search
-
-3.Fleet Server uses: 8220
-
-URL = https// <ip>: port number
-
-4.Go to PowerShell
-
-ssh into fleetserver
-
-\-input: ssh [root@ip](mailto:root@ip)
-
-\*Note:add firewall rule to ELK stack VM to allow fleet to acess
-
-\-input: curl cmd from “install fleet server to centralized host”
-
-add “—fleet server-port = 8220”
-
-\-troubleshoot if needed, check your steps and commands additional modification may be needed.
+### 4. Install Fleet Server
+- Input the curl command from **Install Fleet Server to Centralized Host**:
+  ```bash
+  curl -X POST --fleet-server-port=8220
 
 5\. Connect to ELK VM via SSH:
 
-  
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-19%20002415.png)
 
-![](file:///C:/Users/migue/AppData/Local/Temp/lu5414440namq.tmp/lu5414440nape_tmp_145342d9.png)
-  
+## Sysmon Installation and Configuration for Log Telemetry
 
-![](file:///C:/Users/migue/AppData/Local/Temp/lu5414440namq.tmp/lu5414440nape_tmp_145342d9.png)
+**Purpose:** Sysmon will be installed to monitor and capture telemetry for log creation. Use the process GUID to correlate events and capture the following:
+- Source and destination IPs
+- Ports
+- Processes
+
+### Event ID Descriptions:
+
+- **#1**: Process Creation (Tracks activity of file hash)
+- **#3**: Network Connections (Tracks source and destination IPs/ports)
+- **#6**: Driver Loaded
+- **#7**: Image Loaded
+- **#8**: Create Remote Thread  
+  *(Process injection—commonly used by attackers for code injection)*
+- **#10**: Process Access to Local Security Authority (Lsass.exe)  
+  *(Attackers may tamper with Lsass.exe to steal credentials and move laterally)*
+- **#22**: DNS Query  
+  *(Used to detect Indicators of Compromise (IOCs) on an endpoint)*
+
+---
+
+### Install and Setup Sysmon on Windows VM
+
+
+1. Use the Remote Desktop Protocol (RDP) to connect to the server.
+   - Enter the IP address of your Vultr Windows 2022 Server
+   - Username: `administrator`
+   - Password: copy from Vultr
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-27%20012735.png)
+
+
+2. Open Microsoft Edge
+   - Search on Google: “sysmon”
+   - Download Sysmon from the Microsoft website
+   - Extract the contents of the downloaded file “Sysmon”
+   - Search on Google: “sysmon olaf config”
+
+3. Go to the GitHub link
+   - Find the XML link and download the raw configuration file
+   - Download to the extracted Sysmon folder
+   - Copy the location of the downloaded XML file to the Sysmon folder
+
+4. Open PowerShell, run as administrator (VM)
+   - Enter: `cd` and paste the source location of the XML file
+   - Enter: `dir` (you should see the same directory as the Sysmon binary and configuration file)
+
+5. Open Event Viewer and Services from your search bar
+   - You will not see Sysmon running yet
+
+6. Return to PowerShell to install Sysmon:
+   - Enter: `.\sysmon64.exe -i sysmonconfig.xml`
+   - Install
+
+7. Refresh Event Viewer and Services  
+   Now, Sysmon should be a running process.
+
+
