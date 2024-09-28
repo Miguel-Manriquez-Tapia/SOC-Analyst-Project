@@ -277,4 +277,54 @@ For this project we are using:
 7. Refresh Event Viewer and Services  
    Now, Sysmon should be a running process.
 
+### 1. Login to Elasticsearch
+- Go to: `http://ipaddress:5601`
+- Add integrations:
+  - Search: “custom windows event log package”
+  - Add and configure:
+    - Name
+    - Description
+
+### 2. RDP to Windows Server
+- Open **Event Viewer**
+- Select **Sysmon Event Log**
+- Go to **Properties**:
+  - Copy the **Channel Name**
+  - Paste it into Elasticsearch under **Channel Name**
+
+### 3. Add Channel Name to Existing Hosts in Elasticsearch
+- Set **Agent Policy** to `MYDFIR-Windows-Policy`
+- Save and deploy the changes.
+![imagge alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-28%20131654.png)
+### 4. Add Another Custom Windows Event Log Package
+- Configure the integration:
+  - Name
+  - Description
+
+### 5. Back to Windows Server
+- In **Event Viewer**, select **Windows Defender – Operational**
+- Ingest the following Event IDs:
+  - **1116, 1117** (Malware Detection/Antivirus Error Codes)
+  - **5001** (Real Time Protection is Disabled)
+
+### 6. Add Channel Name for Windows Defender
+- In the **custom windows event log package**, configure the integration:
+  - Add the channel name for Windows Defender
+  - In **Advanced** settings, specify Event IDs:
+    - **1116, 1117, 5001**
+  - Set **Agent Policy** to `MYDFIR-Windows-Policy`
+  - Save and deploy the changes.
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-28%20134456.png)
+### 7. Go to Vultr
+- Add a firewall rule:
+  - Accept **TCP** traffic on port **9200**
+  - Add the rule
+
+*At this point, you will be able to see CPU and memory details in the Agent's dashboard in Elasticsearch.*
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-28%20134636.png)
+### 8. Discover Logs in Elasticsearch
+- Navigate to **Discover** in Kibana.
+- Search for logs with: `winlog.event_id: 1`
+*Now when a log is expanded you will see that Windows Sysmon providing logs to elasticsearch.
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-28%20140708.png)
 
