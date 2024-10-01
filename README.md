@@ -328,3 +328,93 @@ For this project we are using:
 *Now when a log is expanded you will see that Windows Sysmon providing logs to elasticsearch.
 ![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-28%20140708.png)
 
+# Ubuntu Server 24.02 Installation
+
+1. Go to Vultr
+   - Products
+   - Choose Image
+   - Choose Location
+   - Ubuntu 24.02 LTS x64
+   - 1 vCPU
+   - 1024.00 MB
+   - 25 GB SSD
+2. Open PowerShell
+   - ssh root@ipaddress
+   - Copy password from Vultr
+   - Paste password
+   - Update repositories:
+     apt-get update && apt-get upgrade -y
+
+   SCREENSHOT
+
+3. Change directories:
+   cd /var/log
+   ls
+
+4. Access authentication logs:
+   cat auth.log
+   *you can see failed auth attempts with:*
+   grep -i failed auth.log | grep -i root
+
+   SCREENSHOT
+
+---
+
+# Install Elastic Agent on Ubuntu
+
+1. Go to Elasticsearch GUI
+   - Fleet
+   - Agent Policy
+     - New policy: MYDFIR-Linux-Policy
+   - Add agent
+   - Select Linux policy
+   - Enroll in Fleet
+   - Linux Tar (copy the command)
+
+2. PowerShell:
+   - Home directory: cd ~
+   - Paste command
+   - Add --insecure to sudo command (up arrow twice)
+   *You will now be able to see logs from the Linux server on your Elasticsearch.*
+
+   SCREENSHOT
+
+---
+
+# Create Alerts and Dashboards in Kibana
+
+1. Open Elasticsearch, let's create an alert:
+   - Discover
+   - Search for:
+     system.auth.ssh.event: * and agent.name: "MYDFIR-Linux-Miguel" and system.auth.ssh.event : "Failed"
+
+2. Click on Alerts:
+   - Create search threshold rule
+   - Name
+   - Define your query
+   - Save the alert
+   *You will now have a saved search when you click on the hamburger icon on the top left.*
+
+   SCREENSHOT
+
+3. Go to Maps:
+   - Paste in the search query:
+     system.auth.ssh.event: * and agent.name: "MYDFIR-Linux-Miguel" and system.auth.ssh.event : "Failed"
+   - Add layer
+     - Choropleth layer (shades layer)
+     - Administrative boundaries from the Elastic Maps service
+     - World countries
+     - Join field: ISO 3166-1 alpha-2 code
+     - Data view should be the same as the one from your search
+     - Statistics source: join field = source.geo.country.iso_code
+     - Save map: SSH Failed Authentication + New dashboard
+   *You can now have a visual of the failed authentication attempts.*
+
+4. Save the Dashboard:
+   - Name: MYDFIR-Authentication-Activity
+
+5. Duplicate the map:
+   - Change the name to SSH Successful Authentication
+   - Change the settings: go to query and change “Failed” to “Accepted”
+
+6. Save
