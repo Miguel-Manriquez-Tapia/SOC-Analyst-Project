@@ -345,7 +345,7 @@ For this project we are using:
    - Update repositories:
      apt-get update && apt-get upgrade -y
 
-   SCREENSHOT
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-01%20121632.png)
 
 3. Change directories:
    cd /var/log
@@ -356,7 +356,7 @@ For this project we are using:
    *you can see failed auth attempts with:*
    grep -i failed auth.log | grep -i root
 
-   SCREENSHOT
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-01%20145114.png)
 
 ---
 
@@ -377,7 +377,7 @@ For this project we are using:
    - Add --insecure to sudo command (up arrow twice)
    *You will now be able to see logs from the Linux server on your Elasticsearch.*
 
-   SCREENSHOT
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-01%20131947.png)
 
 ---
 
@@ -395,7 +395,7 @@ For this project we are using:
    - Save the alert
    *You will now have a saved search when you click on the hamburger icon on the top left.*
 
-   SCREENSHOT
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-01%20140254.png)
 
 3. Go to Maps:
    - Paste in the search query:
@@ -410,6 +410,8 @@ For this project we are using:
      - Save map: SSH Failed Authentication + New dashboard
    *You can now have a visual of the failed authentication attempts.*
 
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-01%20142118.png)
+
 4. Save the Dashboard:
    - Name: MYDFIR-Authentication-Activity
 
@@ -417,4 +419,8 @@ For this project we are using:
    - Change the name to SSH Successful Authentication
    - Change the settings: go to query and change “Failed” to “Accepted”
 
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-01%20142734.png)
+
 6. Save
+*Heres a chorpleth layer of 2 servers just to give an example of failed attemps
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-01%20175621.png)
