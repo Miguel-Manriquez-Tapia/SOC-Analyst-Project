@@ -422,5 +422,5 @@ For this project we are using:
 ![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-01%20142734.png)
 
 6. Save
-*Heres a chorpleth layer of 2 servers just to give an example of failed attemps
+*Heres a choropleth layer of 2 servers just to give an example of failed attemps
 ![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-01%20175621.png)
