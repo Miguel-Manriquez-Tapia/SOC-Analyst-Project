@@ -426,3 +426,9 @@ For this project we are using:
 
 *Heres a map of 2 servers with a choropleth layer, this shows you how many attempts your servers can and will get from malicious actors. 
 ![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-01%20175621.png)
+
+## Network Diagram:
+<p align="center">
+  <img src="https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-07%20174522.png" alt="image alt">
+</p>
+
