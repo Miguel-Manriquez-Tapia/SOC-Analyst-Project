@@ -549,7 +549,7 @@ Phases of the attack:
    - To fix repositories: 
      - Use: `sudo apt install gnupg`
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-07%20191823.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143425.png)
 
    - Install crowbar  
      Use: `sudo apt-get install -y crowbar`
@@ -557,7 +557,7 @@ Phases of the attack:
    - Check to see if crowbar successfully installed  
      Use: `crowbar -h`
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-07%20191812.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143435.png)
 
 
 
@@ -577,14 +577,14 @@ Phases of the attack:
    - You can see a FreeRDP window pop up  
      *You are now connected to the Windows server by using brute force with Kali Linux.*
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143512.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143459.png)
 
 ## Phase 2:
 
 - Open a command prompt
   - Use: `whoami`, `ipconfig`, `net user administrator` *(adds administrator to admin privileges)*
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143520.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143512.png)
 
 ## Phase 3:
 
@@ -592,7 +592,7 @@ Phases of the attack:
   - In Windows security go to Virus & Threat protection
   - Turn off all settings
  
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143538.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143520.png)
 
 ## Phase 4:
 
@@ -606,7 +606,7 @@ https://mythicmeta.github.io/overview/agent_matrix.html
 
 *You will now see Apollo in your Mythic GUI.*
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143550.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143538.png)
 
 - Create a C2 profile  
   *Here is a list of C2 profiles:*  
@@ -615,9 +615,9 @@ https://mythicmeta.github.io/overview/agent_matrix.html
   - Go to Powershell (Mythic)  
     Use: `./mythic-cli install github https://github.com/MythicC2Profiles/http`
 
-   ![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143600.png)
+   ![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143550.png)
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143607.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143600.png)
 
 - Create a new payload
   - Actions
@@ -636,7 +636,7 @@ https://mythicmeta.github.io/overview/agent_matrix.html
   - Download
     - Copy link address
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-07%20191823.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143607.png)
 
 - Back on Powershell
   - Use: `pwd`
@@ -647,7 +647,7 @@ https://mythicmeta.github.io/overview/agent_matrix.html
     Use: `mv filename svchost-miguel.exe`  
     Use: `ls`
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-07%20191823.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143630.png)
 
   - Create a directory  
     Use: `mkdir 1`  
@@ -694,8 +694,8 @@ https://mythicmeta.github.io/overview/agent_matrix.html
 
 *You have successfully completed the process of retrieving the password file from the target machine using Mythic C2.* 
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-07%20191823.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143646.png)
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-07%20191823.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143655.png)
 
 
