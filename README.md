@@ -40,7 +40,7 @@ Let’s begin:
 - Deploy your server instance.
 - Click the **View Console** option in VULTR to see if the instance is ready to connect via SSH.
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-19%20002344.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-09-19%20002344.png)
 
 ### 3. Use SSH via PowerShell
 *Note: `<>` in this write-up is a placeholder, do not include in any of your commands.*
@@ -54,7 +54,7 @@ Let’s begin:
 ### 4. Update Repositories
 - Input command: `apt-get update && apt-get update`
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-19%20002350.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-09-19%20002350.png)
 
 ### 5. Download and Install Elasticsearch
 - Go to [https://www.elastic.co/downloads/elasticsearch](https://www.elastic.co/downloads/elasticsearch).
@@ -86,7 +86,7 @@ Let’s begin:
 - Add a firewall group.
 - Change the source to: **My IP**, and add a rule.
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-19%20004751.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-09-19%20004751.png)
 
 ### 10. Start Elasticsearch Service
 - Input: 
@@ -182,7 +182,7 @@ For this project we are using:
 - Open **RDP** on a VM or local computer.
 - Paste the IP into **Computer** and it will ask for the password. Connect.
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-19%20002407.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-09-19%20002407.png)
 
 <br />
 <br />
@@ -218,7 +218,7 @@ For this project we are using:
 
 5\. Connect to ELK VM via SSH:
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-19%20002415.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-09-19%20002415.png)
 
 ## Sysmon Installation and Configuration for Log Telemetry
 
@@ -249,7 +249,7 @@ For this project we are using:
    - Enter the IP address of your Vultr Windows 2022 Server
    - Username: `administrator`
    - Password: copy from Vultr
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-27%20012735.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-09-27%20012735.png)
 
 
 2. Open Microsoft Edge
@@ -295,7 +295,7 @@ For this project we are using:
 ### 3. Add Channel Name to Existing Hosts in Elasticsearch
 - Set **Agent Policy** to `MYDFIR-Windows-Policy`
 - Save and deploy the changes.
-![imagge alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-28%20131654.png)
+![imagge alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-09-28%20131654.png)
 ### 4. Add Another Custom Windows Event Log Package
 - Configure the integration:
   - Name
@@ -314,19 +314,19 @@ For this project we are using:
     - **1116, 1117, 5001**
   - Set **Agent Policy** to `MYDFIR-Windows-Policy`
   - Save and deploy the changes.
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-28%20134456.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-09-28%20134456.png)
 ### 7. Go to Vultr
 - Add a firewall rule:
   - Accept **TCP** traffic on port **9200**
   - Add the rule
 
 *At this point, you will be able to see CPU and memory details in the Agent's dashboard in Elasticsearch.*
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-28%20134636.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-09-28%20134636.png)
 ### 8. Discover Logs in Elasticsearch
 - Navigate to **Discover** in Kibana.
 - Search for logs with: `winlog.event_id: 1`
 *Now when a log is expanded you will see that Windows Sysmon providing logs to elasticsearch.
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-09-28%20140708.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-09-28%20140708.png)
 
 # Ubuntu Server 24.02 Installation
 
@@ -345,7 +345,7 @@ For this project we are using:
    - Update repositories:
      apt-get update && apt-get upgrade -y
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-01%20121632.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-01%20121632.png)
 
 3. Change directories:
    cd /var/log
@@ -356,7 +356,7 @@ For this project we are using:
    *you can see failed auth attempts with:*
    grep -i failed auth.log | grep -i root
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-01%20145114.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-01%20145114.png)
 
 ---
 
@@ -377,7 +377,7 @@ For this project we are using:
    - Add --insecure to sudo command (up arrow twice)
    *You will now be able to see logs from the Linux server on your Elasticsearch.*
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-01%20131947.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-01%20131947.png)
 
 ---
 
@@ -395,7 +395,7 @@ For this project we are using:
    - Save the alert
    *You will now have a saved search when you click on the hamburger icon on the top left.*
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-01%20140254.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-01%20140254.png)
 
 3. Go to Maps:
    - Paste in the search query:
@@ -410,7 +410,7 @@ For this project we are using:
      - Save map: SSH Failed Authentication + New dashboard
    *You can now have a visual of the failed authentication attempts.*
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-01%20142118.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-01%20142118.png)
 
 4. Save the Dashboard:
    - Name: MYDFIR-Authentication-Activity
@@ -419,17 +419,17 @@ For this project we are using:
    - Change the name to SSH Successful Authentication
    - Change the settings: go to query and change “Failed” to “Accepted”
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-01%20142734.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-01%20142734.png)
 
 6. Save
 
 
 *Heres a map of 2 servers with a choropleth layer, this shows you how many attempts your servers can and will get from malicious actors. 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-01%20175621.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-01%20175621.png)
 
 ## Network Diagram:
 <p align="center">
-  <img src="https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-07%20174522.png" alt="image alt">
+  <img src="https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-07%20174522.png" alt="image alt">
 </p>
 
 # Setup Mythic Server and Agent
@@ -491,7 +491,7 @@ For this project we are using:
      - Find the password for `MYTHIC_ADMIN_PASSWORD=`  
      - Copy the password
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-07%20191718.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-07%20191718.png)
 
 
    - Now at the login prompt:
@@ -499,7 +499,7 @@ For this project we are using:
      - Paste password  
      *You will now be able to make changes and mess around with the Mythic GUI.*
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-07%20191823.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-07%20191823.png)
 
 
 ## Setup Mythic Server and Agent
@@ -532,7 +532,7 @@ Phases of the attack:
      *You can see the most common passwords.*
 
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143410.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-08%20143410.png)
 
 
 
@@ -549,7 +549,7 @@ Phases of the attack:
    - To fix repositories: 
      - Use: `sudo apt install gnupg`
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143425.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-08%20143425.png)
 
    - Install crowbar  
      Use: `sudo apt-get install -y crowbar`
@@ -557,7 +557,7 @@ Phases of the attack:
    - Check to see if crowbar successfully installed  
      Use: `crowbar -h`
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143435.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-08%20143435.png)
 
 
 
@@ -577,14 +577,14 @@ Phases of the attack:
    - You can see a FreeRDP window pop up  
      *You are now connected to the Windows server by using brute force with Kali Linux.*
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143459.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-08%20143459.png)
 
 ## Phase 2:
 
 - Open a command prompt
   - Use: `whoami`, `ipconfig`, `net user administrator` *(adds administrator to admin privileges)*
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143512.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-08%20143512.png)
 
 ## Phase 3:
 
@@ -592,7 +592,7 @@ Phases of the attack:
   - In Windows security go to Virus & Threat protection
   - Turn off all settings
  
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143520.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-08%20143520.png)
 
 ## Phase 4:
 
@@ -606,7 +606,7 @@ https://mythicmeta.github.io/overview/agent_matrix.html
 
 *You will now see Apollo in your Mythic GUI.*
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143538.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-08%20143538.png)
 
 - Create a C2 profile  
   *Here is a list of C2 profiles:*  
@@ -615,9 +615,9 @@ https://mythicmeta.github.io/overview/agent_matrix.html
   - Go to Powershell (Mythic)  
     Use: `./mythic-cli install github https://github.com/MythicC2Profiles/http`
 
-   ![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143550.png)
+   ![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-08%20143550.png)
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143600.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-08%20143600.png)
 
 - Create a new payload
   - Actions
@@ -636,7 +636,7 @@ https://mythicmeta.github.io/overview/agent_matrix.html
   - Download
     - Copy link address
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143607.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-08%20143607.png)
 
 - Back on Powershell
   - Use: `pwd`
@@ -647,7 +647,7 @@ https://mythicmeta.github.io/overview/agent_matrix.html
     Use: `mv filename svchost-miguel.exe`  
     Use: `ls`
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143630.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-08%20143630.png)
 
   - Create a directory  
     Use: `mkdir 1`  
@@ -694,8 +694,8 @@ https://mythicmeta.github.io/overview/agent_matrix.html
 
 *You have successfully completed the process of retrieving the password file from the target machine using Mythic C2.* 
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143646.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-08%20143646.png)
 
-![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/Screenshot%202024-10-08%20143655.png)
+![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-08%20143655.png)
 
 
