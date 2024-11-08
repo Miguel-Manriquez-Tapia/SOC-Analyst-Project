@@ -697,5 +697,249 @@ https://mythicmeta.github.io/overview/agent_matrix.html
 ![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-08%20143646.png)
 
 ![image alt](https://github.com/Miguel-Manriquez-Tapia/SOC-Analyst-Project/blob/main/image/Screenshot%202024-10-08%20143655.png)
+### Phase 6: Mythic C2 and Kibana Dashboards
+
+**On Mythic in Active Callback:**
+
+- Use: `download C:\Users\Administrator\Documents\passwords.txt`
+- Under downloads (paperclick)
+    - *You will see the file*
+
+#### Create Alerts and Dashboards in Kibana for Mythic Telemetry
+
+1. **Go to Elastic:**
+    - **Discover**  
+    - **New**
+        - Query for binary: `svchost-miguel.exe`
+        - Sort from old to new: You will see `2517`
+        - File create from sysmon event.code 11  
+        - Event code 1 = MD5 hash, to use for context
+        - Input into search: `and event.code : 1`
+        - *We have six documents*
+        - Copy the SHA1 hash
+
+2. **Go to virustotal.com/gui/home/search:**
+    - No hashes in the database, as this is a new agent
+
+3. **Winlog.event_data.OriginalFileName:** `Apollo.exe`
+
+#### Let's make an alert to detect this:
+
+- For this rule to trigger on process created:
+    - In your notes save: `event.code :"1" and (winlog.event_data.Hashes: *2AD125CEC78F1462A9BF587BDD520C01F91D623B194F6A7C5794AE58C0DF5C13, IMPHASH=F34D5F2D4577ED6D9CEEC516C1F5A744* or winlog.event_data.OriginalFileName : "Apollo.exe")`
+    - Save your alert
+    - Name: `Mythic-Apollo-Process-Create`
+
+#### Create a new rule:
+
+- **Security**
+- **Custom Query**
+    - Paste in the query we just searched for
+    - **Required Fields:**
+        - `timestamp`
+        - `host.name`
+        - `message`
+        - `winlog.event_data.CommandLine`
+        - `winlog.event_data.Image`
+        - `winlog.event_data.ParentCommandLine`
+        - `winlog.event_data.ParentImage`
+        - `winlog.event_data.User`
+        - `winlog.event_data.CurrentDirectory`
+
+*Reason for this is to provide all the information we need for the next steps.*
+
+- Name it: `MYDFIR-Mythic-C2-Apollo-Agent-Detected`
+- Description: Rule detects potential C2 Mythic Apollo agent.
+- Severity: Critical
+- Create & Enable Rule
+
+#### Dashboard Creation Panels:
+
+a. **Event ID: 1** = Process Creates – Powershell, Cmd, rundll32  
+    - `event.code: 1 and event.provider: Microsoft-Windows-Sysmon and (powershell or cmd or rundll32)`
+b. **Event ID: 3** = Network Connections (External)  
+    - Processes initiating outbound connections.
+    - `event.code: 3 and event.provider: Microsoft-Windows-Sysmon and winlog.event_data.Initiated: true`
+c. **Event ID: 5001**  
+    - `event.code: "5001" and event.provider : "Microsoft-Windows-Windows Defender"`
+    - **Discover**
+    - **Dashboards**
+    - **Create Dashboard**
+        - Create Visualization
+        - Copy event 1 query
+        - Use the table option
+        - Copy over the field names
+        - Format to your liking
+    - Repeat the process for event 3 and 5001
+    - Save dashboards as Suspicious Activity
+
+#### Set up osTicket:
+
+- Go to Vultr
+    - Deploy a cloud compute – shared CPU
+        - Windows Standard 2022
+        - 55 GB SSD1 vCPU2 GB
+        - 55 GB SSD2 TB
+        - VPC 2.0
+        - Save IP address `10.2.96.5`
+        - Add a firewall
+- RDP into the machine
+    - Download XAMPP and go through the setup process
+        - You will now see the control panel for XAMPP
+    - Go to Windows Defender
+        - Create an inbound rule to allow port 80/443
+    - Go to XAMPP
+        - Start Apache and MySQL service
+        - Admin
+            - phpMyAdmin
+                - User accounts
+                - Root (login information)
+                - Change:
+                    - Hostname to public IP
+                    - Password, use text field: Winter2024
+                - Go
+    - Edit the properties in the configuration file
+        - C: directory
+        - Edit the properties file
+            - Change the domain name to your public IP address
+            - *This is the IP address from your VM*
+            - Save
+
+    - Go to phpMyAdmin file in the same XAMPP directory
+        - Copy the file `config.inc.php` and paste/rename as backup at the end of the file
+        - Change the IP address to your public IP address
+            - /* Bind to the localhost ipv4 address and tcp */
+        - Change the password to: Winter2024
+    - To clear error with pma user (in phpMyAdmin)
+        - Change the hostname to public IP address
+        - Add the same password
+    - Add the password for pma to the configuration file in `config.inc.php`
+    - Go to phpMyAdmin
+
+#### Now let's install osTicket:
+
+- Download self-hosted
+    - Free download
+    - Extract the files downloaded
+    - Go to htdocs under XAMPP
+        - Default contents for the Apache server are stored at this location
+        - Create a new directory
+            - Folder: name it `osticket`
+    - Open osTicket
+        - Copy the 2 folders inside
+            - `scripts/upload`
+        - Paste in the directory we created inside of htdocs
+    - Open Edge
+        - Enter the public address `/osticket/upload`
+
+- The configuration file is missing
+    - Go to the upload folder
+    - Remove “sample” from the file name
+
+    - Go to phpMyAdmin
+        - Create a database
+            - New
+            - Name it and create it
+        - Home
+        - User accounts
+        - Root
+        - Databases
+        - Select the database to give it privileges
+        - Check all
+
+    - Go through the osTicket Basic Installation
+        - Make sure the database is the same as the one created on your phpMyAdmin
+        - Make sure the emails are different for the admin and system
+
+- Now change the permissions to the `os-config`
+    - Copy the path of where `os-config` is
+    - Go to PowerShell admin privileges
+        - `cd` paste path
+        - Input: `icacls .\ost-config.php /reset`
+    - Copy the URLs from osTicket (your osTicket URL, your staff control panel) into your notepad.
+
+- Use the staff control panel
+
+#### osTicket + ELK Integration:
+
+- Go to osTicket
+    - Manage
+    - Add API key
+    - Paste in your VPC 2.0 IP address
+    - Select "Can create tickets"
+    - Add key
+    - Copy API key and save in your notepad
+
+- RDP into your osTicket server
+    - Control panel
+    - Input: `ipconfig`
+    - *You will see that one of your Ethernet instances has your public IP, but the other has a random IP.*
+    - Go to your network
+        - Change the adapter settings
+        - Give it the VPC IP address
+
+- SSH into your ELK server
+    - PowerShell admin privileges
+        - Ping your VPC
+        - *It should work now*
+
+- Now go to Elastic
+    - **Management**
+    - **Stack Management**
+    - **Connectors**
+    - **Webhook**
+        - Name the connector
+        - Input: `http://VPCipaddress/osticket/upload/api/tickets.xml`
+        - No authentication
+        - Add header
+            - Key: `X-API-Key`
+            - Value: Paste in your API key
+        - Test: Go to this page and copy the XML Payload Example
+            - https://github.com/osTicket/osTicket/blob/develop/setup/doc/api/tickets.md
+        - Test was successful if you see this on your edit connector panel
+    - To make sure it worked:
+        - Go to osTicket
+        - Agent panel
+        - You should see the ticket now. Success
+
+#### Deploying EDR:
+
+- Go to Elastic Defend
+    - **Management**
+    - **Integrations**
+    - **Elastic Defend**
+    - Add
+    - Name
+    - Traditional endpoints for the type of environment
+    - Complete EDR
+    - Add to existing host
+        - Windows-policy (your fleet server)
+    - Done
+    - **Security**
+    - **Manage**
+    - **Endpoints**
+    - **Actions**
+
+Malicious Files:  
+- In your Windows server, you can try to open a suspicious file, and it will be blocked and recorded on your EDR. You will now see it in Elasticsearch.
+- You can change the response as well to isolate the host.
+
+*Note: Everything in this lab will be destroyed as I am finished with this project, so no point in trying to connect to my environment.*
+
+---
+
+### Summary:
+
+From this project I was able to:
+
+1. Set up my own ELK instance
+2. Created network diagrams for my environment and attack setup
+3. Set up 2 servers (Linux SSH and Windows RDP)
+4. Installed multiple
+   - Kibana
+   - Elasticsearch
+   - Filebeat
+   - Winlogbeat
+5. **Sent alerts and queries directly from Mythic C2**
 
 
